@@ -1,0 +1,26 @@
+{
+    "name": "usermp/laravel-login",
+    "description": "Simple laravel login",
+    "keywords": ["laravel", "framework"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.2",
+        "kavenegar/laravel": "*",
+        "laravel/passport": "^12.1",
+        "laravel/framework": "^10.0",
+        "sentry/sentry-laravel": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Usermp\\LaravelLogin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mohammad",
+            "email": "usermp76@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
