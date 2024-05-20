@@ -13,7 +13,7 @@ class Constants
     const ERROR_STORE = "Store Error";
     const ERROR_DELETE = "Delete Error";
 
-    const SUCCESS_LOGIN = env("LARAVEL_LOGIN_SUCCESS_LOGIN","Login successful. Welcome to the system!");
+    const SUCCESS_LOGIN = "Login successful. Welcome to the system!";
     const ERROR_LOGIN   = "Invalid credentials. The provided username or password does not match our records.";
     const EMAIL_DISABLE = 'Email login is disabled.';
     const OTP_EXPIRED = 'The OTP has expired. Please request a new one.';
