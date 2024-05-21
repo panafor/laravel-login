@@ -19,11 +19,11 @@ class SignupController extends Controller
     {
         $validated = $request->validated();
 
-        $otpRecord = Otp::where('username', $validated['username'])
+        $otpRecord = Otp::where('username', $validated['phone'])
             ->where('type', 'Login')
             ->latest('expired_at')
             ->first();
-            
+
         $user = User::create([
             "phone"      => $validated['phone'],
             "name"       => $validated['first_name'],
