@@ -18,6 +18,21 @@ class SignupController extends Controller
     public function signup(SignupRequest $request)
     {
         $validated = $request->validated();
+
+        $otpRecord = Otp::where('username', $validated['username'])
+            ->where('type', 'Login')
+            ->latest('expired_at')
+            ->first();
+            
+        $user = User::create([
+            "phone"      => $validated['phone'],
+            "name"       => $validated['first_name'],
+            "lastname"   => $validated['last_name'],
+            "email"      => $validated['email'],
+        ]);
+
+        $user['token'] = $user->createToken('Laravel Password Grant Client')->accessToken;
+        return Response::success("", $user);
         
     }
 }
