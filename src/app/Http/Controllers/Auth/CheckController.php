@@ -30,10 +30,10 @@ class CheckController extends Controller
         }
 
         if ($this->requiresOtp($validated)) {
-            return $this->handleOtpProcess($username);
+            return $this->processOtp($username);
         }
 
-        return $this->handleLoginProcess($username);
+        return $this->processLogin($username);
     }
 
     /**
@@ -59,12 +59,12 @@ class CheckController extends Controller
     }
 
     /**
-     * Handles the OTP process.
+     * Processes the OTP flow.
      *
      * @param string $username
      * @return \Illuminate\Http\JsonResponse
      */
-    private function handleOtpProcess(string $username): \Illuminate\Http\JsonResponse
+    private function processOtp(string $username): \Illuminate\Http\JsonResponse
     {
         if (!$this->isOtpExpired($username)) {
             return Response::error(Constants::OTP_STILL_VALID, 400);
@@ -77,6 +77,27 @@ class CheckController extends Controller
     }
 
     /**
+     * Processes the login flow.
+     *
+     * @param string $username
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function processLogin(string $username): \Illuminate\Http\JsonResponse
+    {
+        $user = User::where('phone', $username)->first();
+
+        if (!$user || !$user->password) {
+            return $this->processOtp($username);
+        }
+
+        if ($this->isOtpExpired($username)) {
+            return $this->processOtp($username);
+        }
+
+        return $this->generateLoginResponse($username);
+    }
+
+    /**
      * Generates the OTP response.
      *
      * @param string $username
@@ -85,9 +106,9 @@ class CheckController extends Controller
     private function generateOtpResponse(string $username): \Illuminate\Http\JsonResponse
     {
         return Response::success(Constants::SUCCESS, [
-            "method"   => $this->getOtpMethod($username),
-            "username" => $username,
-            "otp_ttl"  => env("OTP_TOKEN_EXPIRE_SECONDS", 180),
+            'method'   => $this->getOtpMethod($username),
+            'username' => $username,
+            'otp_ttl'  => env('OTP_TOKEN_EXPIRE_SECONDS', 180),
         ]);
     }
 
@@ -99,28 +120,7 @@ class CheckController extends Controller
      */
     private function getOtpMethod(string $username): string
     {
-        return User::where("phone", $username)->exists() ? "otp" : "register";
-    }
-
-    /**
-     * Handles the login process.
-     *
-     * @param string $username
-     * @return \Illuminate\Http\JsonResponse
-     */
-    private function handleLoginProcess(string $username): \Illuminate\Http\JsonResponse
-    {
-        $user = User::where("phone", $username)->first();
-
-        if (!$user || !$user->password) {
-            return $this->handleOtpProcess($username);
-        }
-
-        if ($this->isOtpExpired($username)) {
-            return $this->handleOtpProcess($username);
-        }
-
-        return $this->generateLoginResponse($username);
+        return User::where('phone', $username)->exists() ? 'otp' : 'register';
     }
 
     /**
@@ -132,9 +132,9 @@ class CheckController extends Controller
     private function generateLoginResponse(string $username): \Illuminate\Http\JsonResponse
     {
         return Response::success(Constants::SUCCESS, [
-            "method"   => "password",
-            "username" => $username,
-            "otp_ttl"  => 0,
+            'method'   => 'password',
+            'username' => $username,
+            'otp_ttl'  => 0,
         ]);
     }
 
@@ -146,7 +146,7 @@ class CheckController extends Controller
      */
     private function generateAndSendOtp(string $username): string
     {
-        $otp = Helpers::otp(env("OTP_TOKEN_NUM_DIGITS", 6));
+        $otp = Helpers::otp(env('OTP_TOKEN_NUM_DIGITS', 6));
         SendSmsToken::dispatch($username, $otp);
         return $otp;
     }
@@ -163,8 +163,8 @@ class CheckController extends Controller
         Otp::create([
             'username'   => $username,
             'token'      => $otp,
-            'type'       => "Login",
-            'expired_at' => Carbon::now()->addSeconds(env("OTP_TOKEN_EXPIRE_SECONDS", 180)),
+            'type'       => 'Login',
+            'expired_at' => Carbon::now()->addSeconds(env('OTP_TOKEN_EXPIRE_SECONDS', 180)),
         ]);
     }
 
