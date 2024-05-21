@@ -90,7 +90,7 @@ class CheckController extends Controller
             return $this->processOtp($username);
         }
 
-        if ($this->isOtpExpired($username)) {
+        if (!$user || $this->isOtpExpired($username)) {
             return $this->processOtp($username);
         }
 
