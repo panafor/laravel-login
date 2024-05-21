@@ -28,6 +28,7 @@ class SignupRequest extends BaseRequest
             "first_name" => ['required', 'string', 'max:255'],
             "last_name"  => ['required', 'string', 'max:255'],
             "password"   => ['required', 'string', 'max:255', 'min:8'],
+            "otp"        => ['required', 'string', 'max:255'],
             "email"      => ['required', 'nullable', 'email'],
         ];
     }

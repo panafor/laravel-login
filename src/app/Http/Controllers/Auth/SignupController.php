@@ -24,6 +24,10 @@ class SignupController extends Controller
             ->latest('expired_at')
             ->first();
 
+        if($otpRecord || $otpRecord->token != $validated['otp']){
+            return Response::error(Constants::ERROR_LOGIN_OTP);
+        }
+
         $user = User::create([
             "phone"      => $validated['phone'],
             "name"       => $validated['first_name'],
