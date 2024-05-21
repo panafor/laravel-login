@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone')->nullable()->unique()->after('email');
+            // Only add 'phone' column if it doesn't already exist
+            if (!Schema::hasColumn('users', 'phone')) {
+                $table->string('phone')->nullable()->unique()->after('email');
+            }
+            
+            // Modify 'email' column to be nullable
             $table->string('email')->nullable()->change();
         });
     }
@@ -22,6 +27,15 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            // Drop 'phone' column if it exists
+            if (Schema::hasColumn('users', 'phone')) {
+                $table->dropUnique(['phone']);
+                $table->dropColumn('phone');
+            }
+            
+            // Revert 'email' column to not nullable
+            $table->string('email')->nullable(false)->change();
+        });
     }
 };
