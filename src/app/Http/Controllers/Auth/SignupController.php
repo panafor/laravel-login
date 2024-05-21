@@ -28,6 +28,7 @@ class SignupController extends Controller
             "phone"      => $validated['phone'],
             "name"       => $validated['first_name'],
             "lastname"   => $validated['last_name'],
+            "password"   => $validated['password'],
             "email"      => $validated['email'],
         ]);
 
