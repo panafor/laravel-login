@@ -9,7 +9,7 @@ To install the package, follow these steps:
 1. Install the package via Composer:
 
     ```bash
-    composer require usermp/laravel-login
+    composer require usermp/laravel-login:"dev-master"
     ```
 
 2. Add the required environment variables to your `.env` file:
