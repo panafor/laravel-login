@@ -24,7 +24,7 @@ class SignupRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            "phone"      => ['required', new Username, 'unique:users,phone'],
+            "phone"      => ['required', 'unique:users,phone'],
             "first_name" => ['required', 'string', 'max:255'],
             "last_name"  => ['required', 'string', 'max:255'],
             "email"      => ['required', 'nullable', 'email'],
