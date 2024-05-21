@@ -16,6 +16,9 @@ return new class extends Migration
             if (!Schema::hasColumn('users', 'phone')) {
                 $table->string('phone')->nullable()->unique()->after('email');
             }
+            if (!Schema::hasColumn('users', 'lastname')) {
+                $table->string('lastname')->nullable()->unique()->after('name');
+            }
             
             // Modify 'email' column to be nullable
             $table->string('email')->nullable()->change();
@@ -32,6 +35,10 @@ return new class extends Migration
             if (Schema::hasColumn('users', 'phone')) {
                 $table->dropUnique(['phone']);
                 $table->dropColumn('phone');
+            }
+            if (Schema::hasColumn('users', 'lastname')) {
+                $table->dropUnique(['lastname']);
+                $table->dropColumn('lastname');
             }
             
             // Revert 'email' column to not nullable
