@@ -1,8 +1,8 @@
-# Laravel Login Package
+## Laravel Login Package
 
 This package provides a simple and secure login system for Laravel applications. It includes OTP verification and user authentication using Laravel Passport, with integration for Kavenegar for OTP sending and Sentry for error tracking.
 
-## Installation
+### Installation
 
 To install the package, follow these steps:
 
@@ -28,10 +28,13 @@ To install the package, follow these steps:
     SENTRY_TRACES_SAMPLE_RATE=1.0
     ```
 
-3. Publish the package configuration:
+3. Add the `LoginServiceProvider` class to the providers array in your `config/app.php` file:
 
-    ```bash
-    php artisan vendor:publish --provider="Usermp\LaravelLogin\LoginServiceProvider"
+    ```php
+    'providers' => [
+        // Other Service Providers
+        Usermp\LaravelLogin\LoginServiceProvider::class,
+    ],
     ```
 
 4. Run the migrations to set up the necessary database tables:
@@ -46,3 +49,4 @@ To install the package, follow these steps:
     php artisan passport:install
     ```
 
+With these steps completed, your Laravel application is now equipped with a secure login system integrated with OTP verification.
