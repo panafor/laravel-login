@@ -25,7 +25,7 @@ class SignupController extends Controller
             ->first();
 
         if($otpRecord || $otpRecord->token != $validated['otp']){
-            return Response::error(Constants::ERROR_LOGIN_OTP);
+            return Response::error(Constants::ERROR_LOGIN_OTP,422);
         }
 
         $user = User::create([
