@@ -8,7 +8,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "kavenegar/laravel": "*",
         "laravel/passport": "^12.1",
-        "laravel/framework": "^10.0",
+        "laravel/framework": "^11.0|^10.0",
         "sentry/sentry-laravel": "*"
     },
     "autoload": {
