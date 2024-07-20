@@ -46,7 +46,7 @@ class Otp extends Model
 
         // When creating a new Sms record, add 3 minutes to the expired_at attribute
         static::creating(function ($sms) {
-            $sms->expired_at = Carbon::now()->addSeconds(env("OTP_TOKEN_EXPIRE_SECONDS", 180));
+            $sms->expired_at = Carbon::now()->addSeconds((int) env("OTP_TOKEN_EXPIRE_SECONDS", 180));
         });
     }
 
