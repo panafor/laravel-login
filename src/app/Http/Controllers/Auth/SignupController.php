@@ -24,7 +24,7 @@ class SignupController extends Controller
             ->latest()
             ->first();
 
-        if($otpRecord || $otpRecord->token != $validated['otp']){
+        if( ! $otpRecord || $otpRecord->token != $validated['otp']){
             return Response::error(Constants::ERROR_LOGIN_OTP,422);
         }
 
