@@ -17,7 +17,7 @@ return new class extends Migration
                 $table->string('phone')->nullable()->unique()->after('email');
             }
             if (!Schema::hasColumn('users', 'lastname')) {
-                $table->string('lastname')->nullable()->unique()->after('name');
+                $table->string('lastname')->nullable()->after('name');
             }
             
             // Modify 'email' column to be nullable
