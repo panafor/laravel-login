@@ -164,7 +164,7 @@ class CheckController extends Controller
             'username'   => $username,
             'token'      => $otp,
             'type'       => 'Login',
-            'expired_at' => Carbon::now()->addSeconds(env('OTP_TOKEN_EXPIRE_SECONDS', 180)),
+            'expired_at' => Carbon::now()->addSeconds((int) env('OTP_TOKEN_EXPIRE_SECONDS', 180)),
         ]);
     }
 
