@@ -21,7 +21,7 @@ class SignupController extends Controller
 
         $otpRecord = Otp::where('username', $validated['phone'])
             ->where('type', 'Login')
-            ->latest('expired_at')
+            ->latest()
             ->first();
 
         if($otpRecord || $otpRecord->token != $validated['otp']){
