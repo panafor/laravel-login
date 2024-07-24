@@ -45,10 +45,10 @@ class Response
      * @param int $status
      * @return JsonResponse
      */
-    public static function error(string $message, int $status = 500): JsonResponse
+    public static function error(string $message, int $status = 500, $statusText = "Error"): JsonResponse
     {
         return response()->json([
-            'status'  => "Error",
+            'status'  => $statusText,
             'message' => $message,
             'data' => null,
         ], $status);

@@ -67,7 +67,7 @@ class CheckController extends Controller
     private function processOtp(string $username): \Illuminate\Http\JsonResponse
     {
         if (!$this->isOtpExpired($username)) {
-            return Response::error(Constants::OTP_STILL_VALID, 400);
+            return Response::error(Constants::OTP_STILL_VALID, 400, "Repeated");
         }
 
         $otp = $this->generateAndSendOtp($username);
