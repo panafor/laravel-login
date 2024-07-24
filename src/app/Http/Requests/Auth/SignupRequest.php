@@ -29,7 +29,7 @@ class SignupRequest extends BaseRequest
             "last_name"  => ['required', 'string', 'max:255'],
             "password"   => ['required', 'string', 'max:255', 'min:8'],
             "otp"        => ['required', 'string', 'max:255'],
-            "email"      => ['nullable', 'email'],
+            "email"      => ['nullable', 'string'],
         ];
     }
 }
