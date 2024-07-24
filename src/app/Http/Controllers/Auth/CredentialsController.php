@@ -60,7 +60,7 @@ class CredentialsController extends Controller
 
         $user = User::where('phone', $otpRecord->username)->first();
         if (!$user) {
-            return Response::error(Constants::ERROR_REGISTER_FIRST);
+            return Response::error(Constants::ERROR_REGISTER_FIRST, 500,"Register");
         }
 
         $user['token'] = $user->createToken('Laravel Password Grant Client')->accessToken;
