@@ -147,7 +147,7 @@ class CheckController extends Controller
     private function generateAndSendOtp(string $username): string
     {
         $otp = Helpers::otp(env('OTP_TOKEN_NUM_DIGITS', 6));
-        SendSmsToken::dispatch($username, $otp);
+        SendSmsToken::dispatch($username, env('KAVENEGAR_TEXT', "کد: ") . $otp . env('KAVENEGAR_TEXT_TWO', "لغو11"));
         return $otp;
     }
 
